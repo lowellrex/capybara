@@ -174,8 +174,13 @@ module Capybara
       #
       # @return [Capybara::Node::Element]  The option element selected
       def select(value = nil, from: nil, **options)
-        scope = from ? find(:select, from, options) : self
-        scope.find(:option, value, options).select_option
+        plugin = options.delete(:using)
+        if plugin
+          Capybara.plugins[plugin].select(self, value, from: from, **options)
+        else
+          scope = from ? find(:select, from, options) : self
+          scope.find(:option, value, options).select_option
+        end
       end
 
       ##
