@@ -9,7 +9,7 @@ module Capybara
         end
 
         # open the select2 dropdown
-        select.sibling(:css, '.select2-container').find(:css, '.select2-selection__arrow').click
+        select.sibling(:css, '.select2-container').click
         results = scope.find(:xpath, XPath.anywhere(:ul)[XPath.attr(:class).contains_word('select2-results__options')][XPath.attr(:id)])
 
         result = results.find(:css, 'li.select2-results__option[role=treeitem]', text: value)
