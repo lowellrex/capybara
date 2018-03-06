@@ -83,11 +83,14 @@ module Capybara
         raise "A configuration block is only accepted when Capybara.threadsafe == true" unless Capybara.threadsafe
         yield config
       end
+
+      puts "\n\ndriver needs a server #{driver.needs_server?}\n\n"
       @server = if config.run_server and @app and driver.needs_server?
         Capybara::Server.new(@app, config.server_port, config.server_host, config.server_errors).boot
       else
         nil
       end
+      puts "done initializing"
       @touched = false
     end
 
