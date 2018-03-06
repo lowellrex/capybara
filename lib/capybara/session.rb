@@ -103,6 +103,8 @@ module Capybara
         end
 
         puts "dragonfruit"
+        puts "mode: #{mode}"
+        puts "app: #{app}"
         driver = Capybara.drivers[mode].call(app)
         puts "elderberry"
         driver.session = self if driver.respond_to?(:session=)
