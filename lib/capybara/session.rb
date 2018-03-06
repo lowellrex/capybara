@@ -92,13 +92,21 @@ module Capybara
     end
 
     def driver
+      puts "in driver()"
       @driver ||= begin
+        puts "apple"
         unless Capybara.drivers.key?(mode)
+          puts "banana"
           other_drivers = Capybara.drivers.keys.map(&:inspect)
+          puts "clementine"
           raise Capybara::DriverNotFoundError, "no driver called #{mode.inspect} was found, available drivers: #{other_drivers.join(', ')}"
         end
+
+        puts "dragonfruit"
         driver = Capybara.drivers[mode].call(app)
+        puts "elderberry"
         driver.session = self if driver.respond_to?(:session=)
+        puts "fig"
         driver
       end
     end
