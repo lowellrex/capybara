@@ -14,25 +14,36 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   attr_reader :app, :options
 
   def browser
+    puts "in Capybara::Selenium::Driver.browser()"
     unless @browser
+      puts "no @browser defined yet"
       if firefox?
+        puts "browser is not firefox"
         options[:desired_capabilities] ||= {}
         options[:desired_capabilities][:unexpectedAlertBehaviour] = "ignore"
       end
 
+      puts "processing options"
       @processed_options = options.reject { |key, _val| SPECIAL_OPTIONS.include?(key) }
+      puts "instantiating new Selenium::WebDriver"
       @browser = Selenium::WebDriver.for(options[:browser], @processed_options)
 
+      puts "determining browser w3c capabilities"
       @w3c = ((defined?(Selenium::WebDriver::Remote::W3CCapabilities) && @browser.capabilities.is_a?(Selenium::WebDriver::Remote::W3CCapabilities)) ||
               (defined?(Selenium::WebDriver::Remote::W3C::Capabilities) && @browser.capabilities.is_a?(Selenium::WebDriver::Remote::W3C::Capabilities)))
+
+      puts "getting process ID"
       main = Process.pid
       at_exit do
+        puts "exiting"
         # Store the exit status of the test run since it goes away after calling the at_exit proc...
         @exit_status = $ERROR_INFO.status if $ERROR_INFO.is_a?(SystemExit)
         quit if Process.pid == main
         exit @exit_status if @exit_status # Force exit with stored status
       end
     end
+
+    puts "returning browser"
     @browser
   end
 
@@ -47,6 +58,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   end
 
   def visit(path)
+    puts "in Capybara::Selenium::Driver.visit()"
     browser.navigate.to(path)
   end
 
