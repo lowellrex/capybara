@@ -247,15 +247,23 @@ module Capybara
       puts "inside visit() sub"
 
       raise_server_error!
+
+      puts "alpha"
       @touched = true
 
+      puts "bravo"
+
       visit_uri = ::Addressable::URI.parse(visit_uri.to_s)
+
+      puts "charlie"
 
       uri_base = if @server
         ::Addressable::URI.parse(config.app_host || "http://#{@server.host}:#{@server.port}")
       else
         config.app_host && ::Addressable::URI.parse(config.app_host)
       end
+
+      puts "delta"
 
       if uri_base && [nil, 'http', 'https'].include?(visit_uri.scheme)
         if visit_uri.relative?
@@ -272,6 +280,8 @@ module Capybara
           visit_uri.port ||= @server.port
         end
       end
+
+      puts "echo"
 
       driver.visit(visit_uri.to_s)
     end
