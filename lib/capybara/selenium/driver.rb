@@ -25,6 +25,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
 
       puts "processing options"
       @processed_options = options.reject { |key, _val| SPECIAL_OPTIONS.include?(key) }
+      puts @processed_options
       puts "instantiating new Selenium::WebDriver"
       @browser = Selenium::WebDriver.for(options[:browser], @processed_options)
 
