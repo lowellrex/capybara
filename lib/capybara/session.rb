@@ -244,6 +244,8 @@ module Capybara
     # @param [#to_s] visit_uri     The URL to navigate to. The parameter will be cast to a String.
     #
     def visit(visit_uri)
+      puts "inside visit() sub"
+
       raise_server_error!
       @touched = true
 
